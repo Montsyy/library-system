@@ -18,7 +18,7 @@ class CategoriesController extends Controller
             'Basis Data',
             'Jaringan Komputer',
             'Sistem Informasi',
-            'Algoritma'
+            'Algoritma Struktur Data'
         ];
         return view('categories.index', compact('categories'));
     }
