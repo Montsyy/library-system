@@ -1,4 +1,2 @@
-<h1>Daftar Buku</h1>
-<p>
-    Sistem Informasi Perpustakaan
-</p>
+<h1>{{ $title }}</h1>
+<p>{{ $description }}</p>

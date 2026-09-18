@@ -10,4 +10,11 @@ class BookController extends Controller
     {
         return 'Book ID: ' . $id;
     }
+
+public function index()
+{
+    $title = 'Daftar Buku';
+    $description = 'Daftar buku yang tersedia di perpustakaan.';
+    return view('books.index', compact('title', 'description'));
+}
 }
