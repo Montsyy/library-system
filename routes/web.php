@@ -14,3 +14,4 @@ Route::get('/books', [BookController::class, 'index']);
 Route::get('/categories/{id}', [CategoriesController::class, 'show']);
 Route::get('/categories', [CategoriesController::class, 'index']);
 Route::get('/members/{id}', [MemberController::class, 'show']);
+Route::get('/members', [MemberController::class, 'index']);
