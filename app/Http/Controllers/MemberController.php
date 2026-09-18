@@ -15,10 +15,11 @@ class MemberController extends Controller
     {
         $members = [
             'Andi',
-            'Buddi',
+            'Budi',
             'Citra',
             'Dewi',
-            'Eko'
+            'Eko',
+            'Lazuardi'
         ];
         return view('members.index', compact('members'));
     }
