@@ -20,6 +20,14 @@ class BookController extends Controller
             'Algoritma dan Pemrograman',
             'Pemrograman Berorientasi Objek'
         ];
-        return view('books.index',compact('books'));
+        $stock = [
+            'Pemrograman PHP' => 10,
+            'Laravel untuk Pemula' => 0,
+            'Basis Data' => 0,
+            'Algoritma dan Pemrograman' => 12,
+            'Pemrograman Berorientasi Objek' => 7
+        ];
+        return view('books.index',compact('books', 'stock'));
+        
     } 
 }
