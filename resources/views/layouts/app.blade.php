@@ -11,6 +11,7 @@
     <header>
         <h1>Library System</h1>
         <nav>
+            <a href="/dashboard">Dashboard</a>
             <a href="/books">Books</a>
             <a href="/categories">Categories</a>
             <a href="/members">Members</a>
