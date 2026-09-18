@@ -9,6 +9,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/books', [BookController::class, 'index']);
+Route::get('/books/{id}', [BookController::class, 'show']);
 Route::get('/categories', [CategoriesController::class, 'index']);
 Route::get('/members', [MemberController::class, 'index']);

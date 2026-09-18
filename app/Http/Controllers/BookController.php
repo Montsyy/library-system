@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index()
+    public function show($id)
     {
-        return view('books.index');
+        return 'Book ID: ' . $id;
     }
 }
