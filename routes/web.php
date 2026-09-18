@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/books/{id}', [BookController::class, 'show']);
+Route::get('/books/{id}', [BookController::class, 'bookdetail']);
 Route::get('/books', [BookController::class, 'index']);
 Route::get('/categories/{id}', [CategoriesController::class, 'show']);
 Route::get('/categories', [CategoriesController::class, 'index']);

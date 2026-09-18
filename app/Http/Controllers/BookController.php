@@ -6,10 +6,6 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function show($id)
-    {
-        return 'Book ID: ' . $id;
-    }
 
     public function index()
     {
@@ -31,5 +27,9 @@ class BookController extends Controller
         ];
         return view('books.index',compact('books', 'stock'));
         
-    } 
+    }
+    public function bookDetail($id)
+    {
+        return 'Book ID: ' . $id;
+    }
 }
