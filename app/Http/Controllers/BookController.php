@@ -11,7 +11,7 @@ class BookController extends Controller
         return 'Book ID: ' . $id;
     }
 
-public function index()
+    public function index()
     {
        $books = [
             'Pemrograman PHP',

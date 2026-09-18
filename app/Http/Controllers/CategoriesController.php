@@ -10,4 +10,16 @@ class CategoriesController extends Controller
     {
         return 'Category ID: ' . $id;
     }
+
+    public function index()
+    {
+        $categories = [
+            'Pemrograman',
+            'Basis Data',
+            'Jaringan Komputer',
+            'Sistem Informasi',
+            'Algoritma'
+        ];
+        return view('categories.index', compact('categories'));
+    }
 }

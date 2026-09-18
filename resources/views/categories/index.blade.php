@@ -1,7 +1,12 @@
-<h1>
-    Kategori Buku
-</h1>
+@extends('layouts.app')
+@section('title', 'Kategori Buku')
 
-<p>
-    Sistem Informasi Perpustakaan Buku
-</p>
+@section('content')
+    <h2>Kategori Buku</h2>
+    <ul>
+        @foreach($categories as $category)
+            <li>{{ $category }}</li>
+        @endforeach
+    </ul>
+
+@endsection

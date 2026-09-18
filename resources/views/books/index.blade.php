@@ -2,7 +2,7 @@
 @section('title', 'Daftar Buku')
 
 @section('content')
-    <h1>Daftar Buku</h1>
+    <h2>Daftar Buku</h2>
     <ul>
         @foreach($books as $book)
             <li>{{ $book }}</li>
