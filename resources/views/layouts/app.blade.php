@@ -10,6 +10,11 @@
 <body>
     <header>
         <h1>Library System</h1>
+        <nav>
+            <a href="/books">Books</a>
+            <a href="/categories">Categories</a>
+            <a href="/members">Members</a>
+        </nav>
         <hr>
     </header>
 <main>
