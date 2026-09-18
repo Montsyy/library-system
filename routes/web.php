@@ -10,5 +10,5 @@ Route::get('/', function () {
 });
 
 Route::get('/books/{id}', [BookController::class, 'show']);
-Route::get('/categories', [CategoriesController::class, 'index']);
-Route::get('/members', [MemberController::class, 'index']);
+Route::get('/categories/{id}', [CategoriesController::class, 'show']);
+Route::get('/members/{id}', [MemberController::class, 'show']);

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function index()
+    public function show($id)
     {
-        return view('members.index');
+        return 'Member ID: ' . $id;
     }
 }

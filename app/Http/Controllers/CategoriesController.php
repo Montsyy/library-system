@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
-    public function index()
+    public function show($id)
     {
-        return view('categories.index');
+        return 'Category ID: ' . $id;
     }
 }
