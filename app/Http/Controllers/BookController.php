@@ -25,11 +25,10 @@ class BookController extends Controller
             ['id' => 5, 'stock' => 7],
             ['id' => 6, 'stock' => 3]
         ];
-        return view('books.index',compact('books', 'stock'));
-        
+        return view('books.index', compact('books', 'stock'));
     }
-    public function bookDetail($id)
+    public function show($id)
     {
-        return 'Book ID: ' . $id;
+        return view('books.show', ['id' => $id]);
     }
 }
