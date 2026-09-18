@@ -1,3 +1,4 @@
 <h1>
-    dashboard
+    Library System Dashboard
 </h1>
+<p>Selamat datang di Sistem Informasi Perpustakaan.</p>
