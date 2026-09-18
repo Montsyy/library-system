@@ -5,24 +5,19 @@
     <h2>Daftar Buku</h2>
     <ul>
         @foreach($books as $book)
-            <li>{{ $book }}</li>
+            <li>
+                <p>Judul: <strong>{{ $book['title'] }}</strong></p>
+                <p>Penulis: {{ $book['author'] }}</p>
+                <p>Tahun terbit: {{ $book['tahun'] }}</p>
+                <p>Stock: {{ $stock[$book['id'] - 1]['stock'] ?? 0 }}
+                    @if ($stock[$book['id'] - 1]['stock'] > 0)
+                        (Tersedia)
+                    @else
+                        (Habis)
+                    @endif
+                </p>
+            </li>
         @endforeach
     </ul>
-    <h2>Stock Buku</h2>
-    @if(!empty($stock))
-            <ul>
-                @foreach($stock as $title => $qty)
-                    <li>
-                        {{ $title }} - 
-                        @if($qty > 0)
-                            Tersedia ({{ $qty }})
-                        @else
-                            Habis
-                        @endif
-                    </li>
-                @endforeach
-            </ul>
-        @else
-            <p>Data stok tidak tersedia.</p>
-        @endif
+
 @endsection
