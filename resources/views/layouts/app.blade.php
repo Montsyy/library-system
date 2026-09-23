@@ -23,7 +23,7 @@
 </main>
 <footer>
     <hr>
-    <p>Library System</p>
+    <p>Library System - Dhafi Putra Alfarezi - 5A</p>
 </footer>
 
 </body>
