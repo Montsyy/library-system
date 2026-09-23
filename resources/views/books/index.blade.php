@@ -10,7 +10,13 @@
         </h3>
         <p>Penulis: {{$book->author}} </p>
         <p>Tahun: {{$book->year}}</p>
-        <p>Stock: {{$book->stock}}</p>
+        <p>Stock: {{$book->stock}}
+            @if ($book->stock > 0)
+                (<span style="color: green;">Tersedia</span>)
+            @else
+                (<span style="color: red;">Tidak Tersedia</span>)
+            @endif
+        </p>
         <p></p>
         @endforeach
     </ul>
