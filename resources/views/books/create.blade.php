@@ -2,6 +2,7 @@
 @section('title', 'Masukkan Buku Baru')
 
 @section('content')
+    <a href="{{ route('books.index') }}"><-Kembali ke Daftar Buku</a>
     <h2>Masukkan Buku Baru</h2>
     <form action="{{ route('books.store') }}" method="POST">
         @csrf

@@ -18,7 +18,23 @@
                 (<span style="color: red;">Tidak Tersedia</span>)
             @endif
         </p>
-        <p><a href="{{ route('books.edit', $book->id) }}">Edit Buku</a></p>
+        <form 
+        action="{{ route('books.edit', $book->id) }}" method="GET">
+            <button type="submit">Edit Buku</button>
+        </form>
+        <p></p>
+        <form
+            action="{{ route('books.destroy', $book) }}"
+            method="POST"
+        >
+            @csrf
+            @method('DELETE')
+
+            <button type="submit">
+                Hapus Buku
+            </button>
+        </form>
+
         <p></p>
         @endforeach
     </ul>

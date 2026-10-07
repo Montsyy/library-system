@@ -35,7 +35,7 @@ class BookController extends Controller
 
         Book::create($validatedData);
 
-        return redirect()->route('books.index')->with('success', 'Book created successfully.');
+        return redirect()->route('books.index');
     }
 
     public function edit($id)
@@ -55,7 +55,14 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $book->update($validatedData);
 
-        return redirect()->route('books.index')->with('success', 'Book updated successfully.');
+        return redirect()->route('books.index');
+    }
+    public function destroy($id)
+    {
+        $book = Book::findOrFail($id);
+        $book->delete();
+
+        return redirect()->route('books.index');
     }
 
 }

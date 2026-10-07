@@ -2,6 +2,7 @@
 @section('title', 'Update Buku')
 
 @section('content')
+    <a href="{{ route('books.index') }}"><-Kembali ke Daftar Buku</a>
     <h2>Update Buku</h2>
     <form action="{{ route('books.update', $book->id) }}" method="POST">
         @csrf
