@@ -11,6 +11,7 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
+        
         return view('books.index', compact('books'));
     }
     public function show($id)
@@ -18,4 +19,23 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         return view('books.show', compact('book'));
     }
+    public function create()
+    {
+        return view('books.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'year' => 'required|integer|min:1900|max:' . date('Y'),
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        Book::create($validatedData);
+
+        return redirect()->route('books.index')->with('success', 'Book created successfully.');
+    }
+
 }

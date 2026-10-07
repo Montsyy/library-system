@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    protected $fillabel = [
+    protected $fillable = [
         'title',
         'author',
         'year',
