@@ -13,7 +13,6 @@
         <nav>
             <a href="/dashboard">Dashboard</a>
             <a href="/books">Books</a>
-            <a href="/books/create">Tambah Buku</a>
             <a href="/categories">Categories</a>
             <a href="/members">Members</a>
         </nav>

@@ -3,6 +3,7 @@
 
 @section('content')
     <h2>Daftar Buku</h2>
+    <a href="{{ route('books.create') }}">Tambah Buku</a>
     <ul>
         @foreach($books as $book)
         <h3>
@@ -17,6 +18,7 @@
                 (<span style="color: red;">Tidak Tersedia</span>)
             @endif
         </p>
+        <p><a href="{{ route('books.edit', $book->id) }}">Edit Buku</a></p>
         <p></p>
         @endforeach
     </ul>
