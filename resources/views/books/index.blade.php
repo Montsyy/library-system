@@ -18,6 +18,8 @@
                 (<span style="color: red;">Tidak Tersedia</span>)
             @endif
         </p>
+        <a href="{{ route('books.show', $book->id) }}">Lihat Detail Buku</a>
+        <p></p>
         <form 
         action="{{ route('books.edit', $book->id) }}" method="GET">
             <button type="submit">Edit Buku</button>
