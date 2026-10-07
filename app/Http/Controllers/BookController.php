@@ -38,12 +38,12 @@ class BookController extends Controller
         return redirect()->route('books.index');
     }
 
-    public function edit($id)
+    public function edit(Book $book)
     {
-        $book = Book::findOrFail($id);
         return view('books.edit', compact('book'));
     }
-    public function update(Request $request, $id)
+
+    public function update(Request $request, Book $book)
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -52,14 +52,12 @@ class BookController extends Controller
             'stock' => 'required|integer|min:0',
         ]);
 
-        $book = Book::findOrFail($id);
         $book->update($validatedData);
 
         return redirect()->route('books.index');
     }
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        $book = Book::findOrFail($id);
         $book->delete();
 
         return redirect()->route('books.index');
