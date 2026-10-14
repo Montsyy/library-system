@@ -26,14 +26,9 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'year' => 'required|integer|min:1900|max:' . date('Y'),
-            'stock' => 'required|integer|min:0',
-        ]);
+        $data = $request->only(['title', 'author', 'year', 'stock']);
 
-        Book::create($validatedData);
+        Book::create($data);
 
         return redirect()->route('books.index');
     }
@@ -45,14 +40,9 @@ class BookController extends Controller
 
     public function update(Request $request, Book $book)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'year' => 'required|integer|min:1900|max:' . date('Y'),
-            'stock' => 'required|integer|min:0',
-        ]);
+        $data = $request->only(['title', 'author', 'year', 'stock']);
 
-        $book->update($validatedData);
+        $book->update($data);
 
         return redirect()->route('books.index');
     }
