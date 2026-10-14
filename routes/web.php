@@ -10,6 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::redirect('/', '/dashboard');
+
 Route::resource('books', BookController::class);
 Route::get('/categories/{id}', [CategoriesController::class, 'show']);
 Route::get('/categories', [CategoriesController::class, 'index']);
