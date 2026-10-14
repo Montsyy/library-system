@@ -8,20 +8,48 @@
         @csrf
         @method('PUT')
         <div>
-            <label for="title">Judul:</label>
-            <input type="text" name="title" id="title" value="{{ $book->title }}" required>
+        <label>Judul Buku:</label>
+        <input
+            type="text"
+            name="title"
+            value="{{old('title', $book->title)}}"
+        >
+            @error('title')
+            <p>{{ $message }}</p>
+            @enderror
         </div>
         <div>
-            <label for="author">Penulis:</label>
-            <input type="text" name="author" id="author" value="{{ $book->author }}" required>
+        <label>Penulis:</label>
+        <input
+            type="text"
+            name="author"
+            value="{{ old('author', $book->author) }}"
+        >
+            @error('author')
+            <p>{{ $message }}</p>
+            @enderror
         </div>
         <div>
-            <label for="year">Tahun:</label>
-            <input type="number" name="year" id="year" value="{{ $book->year }}" required>
+        <label>Tahun:</label>
+        <input
+            type="text"
+            name="year"
+            value="{{ old('year', $book->year) }}"
+        >
+            @error('year')
+            <p>{{ $message }}</p>
+            @enderror
         </div>
         <div>
-            <label for="stock">Stok:</label>
-            <input type="number" name="stock" id="stock" value="{{ $book->stock }}" required>
+        <label>Stok:</label>
+        <input
+            type="text"
+            name="stock"
+            value="{{ old('stock', $book->stock) }}"
+        >
+            @error('stock')
+            <p>{{ $message }}</p>
+            @enderror
         </div>
         <button type="submit">Update</button>
     </form>
