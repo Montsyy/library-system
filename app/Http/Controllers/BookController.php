@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class BookController extends Controller
 {
@@ -26,11 +27,18 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->only(['title', 'author', 'year', 'stock']);
+        $validated = $request->validate([
+            'title' => 'required|string|max:255|alpha:ascii',
+            'author' => 'required|string|max:255|alpha:ascii',
+            'year' => 'required|integer|min:2000',
+            'stock' => 'required|integer|min:0'
+        ]);
 
-        Book::create($data);
+        Book::create($validated);
 
-        return redirect()->route('books.index');
+        return redirect()
+                ->route('books.index')
+                ->with('success', 'Data buku berhasil ditambahkan');
     }
 
     public function edit(Book $book)
@@ -40,9 +48,14 @@ class BookController extends Controller
 
     public function update(Request $request, Book $book)
     {
-        $data = $request->only(['title', 'author', 'year', 'stock']);
+        $validated = $request->validate([
+            'title' => 'required|string|max:255|alpha:ascii',
+            'author' => 'required|string|max:255|alpha:ascii',
+            'year' => 'required|integer|min:2000',
+            'stock' => 'required|integer|min:0'
+        ]);
 
-        $book->update($data);
+        $book->update($validated);
 
         return redirect()->route('books.index');
     }
