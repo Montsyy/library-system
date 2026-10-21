@@ -4,11 +4,11 @@
 
     <a href="{{ route('books.index') }}"><-Kembali ke Daftar Buku</a>
     <h1>Book Details</h1>
-    <p>Book ID: {{ $book->id }}</p>
     <h3>
-        <li>{{$book->title}}</li>
+        <li>Judul: {{$book->title}}</li>
     </h3>
     <p>Penulis: {{$book->author}}</p>
+    <p>Kategori: {{$book->category?->name ?? 'Belum Ada Kategori'}}</p>
     <p>Tahun: {{$book->year}}</p>
     <p>Stock: {{$book->stock}}
         @if ($book->stock > 0)
