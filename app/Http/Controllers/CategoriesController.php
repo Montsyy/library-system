@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -13,13 +14,7 @@ class CategoriesController extends Controller
 
     public function index()
     {
-        $categories = [
-            'Pemrograman',
-            'Basis Data',
-            'Jaringan Komputer',
-            'Sistem Informasi',
-            'Algoritma Struktur Data'
-        ];
+        $categories = Category::latest()->get();
         return view('categories.index', compact('categories'));
     }
 }
