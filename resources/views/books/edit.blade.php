@@ -30,6 +30,20 @@
             @enderror
         </div>
         <div>
+        <label>Kategori:</label>
+        <select name="category_id">
+            <option value="">Pilih Kategori</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ old('category_id', $book->category_id) == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+            @error('category_id')
+            <p>{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
         <label>Tahun:</label>
         <input
             type="text"
