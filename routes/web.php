@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\MemberController;
@@ -11,6 +12,20 @@ Route::get('/', function () {
 });
 
 Route::redirect('/', '/dashboard');
+
+Route::middleware('guest')->group(function() {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])
+        ->middleware('auth')
+        ->name('logout');
+
+Route::middleware('auth')->group(function () { [
+    Route::resource('dashboard', DashboardController::class),
+    Route::resource('books', BookController::class)];
+});
 
 Route::resource('books', BookController::class);
 Route::get('/categories/{id}', [CategoriesController::class, 'show']);
