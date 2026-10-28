@@ -16,6 +16,10 @@
         </div>
     @endif
 
+    @if (session('success'))
+        <p style="color: red;">{{ session('success') }}</p>
+    @endif
+
     <form action="{{ route('login.submit') }}" method="POST">
         @csrf
 
