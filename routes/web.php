@@ -22,9 +22,8 @@ Route::post('/logout', [AuthController::class, 'logout'])
         ->middleware('auth')
         ->name('logout');
 
-Route::middleware('auth')->group(function () { [
-    Route::resource('dashboard', DashboardController::class),
-    Route::resource('books', BookController::class)];
+Route::middleware('auth')->group(function () { 
+    Route::resource('books', BookController::class);
 });
 
 Route::resource('books', BookController::class);
