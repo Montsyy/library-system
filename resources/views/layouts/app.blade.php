@@ -19,7 +19,9 @@
             @csrf
             <button type="submit">Logout</button>
             </form>
-
+            @can('manage-users')
+                <a href="{{ route('users.index') }}">Kelola Pengguna</a>
+            @endcan
         </nav>
         <hr>
     </header>

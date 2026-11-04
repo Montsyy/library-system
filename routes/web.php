@@ -30,6 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'can:manage-users'])->group(function () {
     Route::resource('users', UserController::class);
 });
