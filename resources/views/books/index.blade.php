@@ -48,11 +48,13 @@
                             <a href="{{ route('books.show', $book->id) }}">Detail</a>
                             <a href="{{ route('books.edit', $book->id) }}">Edit</a>
                             
+                            @can('delete', $book)
                             <form action="{{ route('books.destroy', $book) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus buku ini?');" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" style="color: red; cursor: pointer;">Hapus</button>
                             </form>
+                            @endcan
                         </div>
                     </td>
                 </tr>

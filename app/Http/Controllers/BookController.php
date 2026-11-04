@@ -6,6 +6,7 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Symfony\Contracts\Service\Attribute\Required;
+use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
 {
@@ -67,9 +68,10 @@ class BookController extends Controller
     }
     public function destroy(Book $book)
     {   
+        Gate::authorize('delete', $book);
         $book->delete();
 
-        return redirect()->route('books.index');
+        return redirect()->route('books.index')->with('succes', 'Buku Berhasil dihapus');
     }
 
 }
