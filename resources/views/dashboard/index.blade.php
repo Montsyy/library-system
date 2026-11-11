@@ -1,12 +1,26 @@
 @extends('layouts.app')
-@section('title', 'Library System')
+
 @section('content')
-    <h2>Selamat Datang di Sistem Perpustakaan</h2>
-    <p>Gunakan menu navigasi di atas untuk mengakses daftar buku, kategori, dan member.</p>
-    <h3>Informasi Perpustakaan</h3>
-    <ul>
-        <li>Jumlah Buku: {{ $bookCount }}</li>
-        <li>Jumlah Kategori: {{ $categoryCount }}</li>
-        <li>Jumlah Member: {{ $memberCount }}</li>
-    </ul>
+<div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-6">Dashboard Perpustakaan</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="p-4 bg-white border rounded shadow-sm">
+            <p class="text-sm text-gray-500">Jumlah Judul Buku</p>
+            <p class="text-3xl font-bold">{{ $totalBooks }}</p>
+        </div>
+        <div class="p-4 bg-white border rounded shadow-sm">
+            <p class="text-sm text-gray-500">Jumlah Stok Buku Tersedia</p>
+            <p class="text-3xl font-bold">{{ $totalBookStock }}</p>
+        </div>
+        <div class="p-4 bg-white border rounded shadow-sm">
+            <p class="text-sm text-gray-500">Jumlah Member</p>
+            <p class="text-3xl font-bold">{{ $totalMembers }}</p>
+        </div>
+        <div class="p-4 bg-white border rounded shadow-sm">
+            <p class="text-sm text-gray-500">Jumlah Buku Sedang Dipinjam</p>
+            <p class="text-3xl font-bold">{{ $totalBorrowedBooks }}</p>
+        </div>
+    </div>
+</div>
 @endsection
