@@ -21,7 +21,7 @@ class CategorySeeder extends Seeder
             ['name' => 'Dongeng']
         ];
         foreach ($categories as $category) {
-            Category::create($category);
+            \App\Models\Category::firstOrCreate($category);
         }
     }
 }
