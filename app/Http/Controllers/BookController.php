@@ -71,7 +71,7 @@ class BookController extends Controller
         Gate::authorize('delete', $book);
         $book->delete();
 
-        return redirect()->route('books.index')->with('succes', 'Buku Berhasil dihapus');
+        return redirect()->route('books.index')->with('success', 'Buku Berhasil dihapus');
     }
 
 }
