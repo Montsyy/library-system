@@ -9,60 +9,164 @@
 
 # Library System
 
-## Description
-Simple Library Information System
+Sistem informasi perpustakaan berbasis Laravel untuk mengelola data buku, kategori, anggota, peminjaman, serta manajemen user dengan pembagian hak akses admin dan petugas.
 
-## Requirements
-- PHP
-- Composer
+## Fitur Utama
+
+- Autentikasi pengguna
+- Role akses:
+  - Admin
+  - Petugas
+- Manajemen buku
+- Manajemen kategori buku
+- Manajemen anggota perpustakaan
+- Transaksi peminjaman buku
+- Pengembalian buku
+- Dashboard utama
+- Manajemen user (khusus admin)
+
+## Teknologi yang Digunakan
+
+- PHP 8.3
+- Laravel 13
 - MySQL
-- Laravel
+- Blade Templates
+- Vite
 
-## Installation
-1. Buat Proyek Baru
+## Persyaratan
 
-Jalankan perintah `create-project` untuk mengunduh kerangka kerja Laravel dan seluruh dependensinya secara otomatis:
+Sebelum menjalankan aplikasi, pastikan perangkat Anda sudah terpasang:
+
+- PHP 8.3+
+- Composer
+- MySQL / MariaDB
+- Node.js dan npm
+- Web browser
+
+## Langkah Instalasi
+
+1. Clone repository
 
 ```bash
-composer create-project laravel/laravel nama-proyek
+git clone https://github.com/Montsyy/library-system.git
+cd library-system
 ```
 
-2. Masuk ke Direktori Proyek
-
-Pindahkan direktori kerja terminal ke dalam folder proyek yang baru dibuat:
+2. Install dependency PHP
 
 ```bash
-cd nama-proyek
+composer install
 ```
 
-3. Konfigurasi Lingkungan (.env)
+3. Install dependency frontend
 
-Proses instalasi Composer biasanya otomatis menduplikasi berkas `.env.example` menjadi `.env` serta membuat application key. Jika berkas `.env` belum tersedia atau kunci aplikasi belum terpasang, jalankan:
+```bash
+npm install
+```
+
+4. Salin file environment
+
+```bash
+copy .env.example .env
+```
+
+atau pada Linux/macOS:
 
 ```bash
 cp .env.example .env
+```
+
+5. Generate application key
+
+```bash
 php artisan key:generate
 ```
 
-Buka berkas `.env` untuk menyesuaikan koneksi database (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`) sesuai kebutuhan sistem lokal.
+6. Konfigurasi database
 
-4. Jalankan Server Pengembangan
+Buka file `.env` lalu sesuaikan pengaturan database Anda:
 
-Nyalakan server lokal bawaan Laravel:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=library_system
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+7. Jalankan migrasi dan seeder
+
+```bash
+php artisan migrate --seed
+```
+
+8. Build asset frontend
+
+```bash
+npm run build
+```
+
+9. Jalankan aplikasi
 
 ```bash
 php artisan serve
 ```
 
-Aplikasi siap diakses melalui browser di alamat http://127.0.0.1:8000.
+Aplikasi akan tersedia di:
 
-## Clone Repository
-
-```bash
-git clone https://github.com/Montsyy/library-system.git
+```text
+http://127.0.0.1:8000
 ```
 
-## Author
-Nama    : DHAFI PUTRA ALFAREZI
-NPM     : 2410631250008
-KELAS   : 5A SISTEM INFORMASI
+## Akun Default
+
+Seeder telah membuat akun default berikut:
+
+### Admin
+- Email: `admin@example.com`
+- Password: `admin1234#`
+
+### Petugas
+- Email: `petugas@example.com`
+- Password: `petugas1234#`
+
+## Struktur Aplikasi
+
+- `app/Http/Controllers` → logika controller
+- `app/Models` → model aplikasi
+- `resources/views` → tampilan Blade
+- `routes/web.php` → route aplikasi
+- `database/migrations` → struktur database
+- `database/seeders` → data awal aplikasi
+
+## Role Akses
+
+- Admin:
+  - dapat mengelola user
+  - dapat mengelola kategori
+  - dapat mengelola buku
+  - dapat mengelola anggota
+  - dapat melihat semua peminjaman
+
+- Petugas:
+  - dapat mengelola buku
+  - dapat mengelola anggota
+  - dapat mengelola peminjaman
+  - tidak dapat mengelola user atau kategori
+
+## Developer
+
+- Nama: DHAFI PUTRA ALFAREZI
+- NPM: 2410631250008
+- Kelas: 5A Sistem Informasi
+
+## Catatan
+
+Project ini merupakan sistem perpustakaan sederhana yang fokus pada proses pengelolaan data buku dan transaksi peminjaman. Jika Anda ingin dikembangkan lebih lanjut, fitur yang dapat ditambahkan antara lain:
+
+- riwayat peminjaman per user
+- laporan statistik
+- export PDF/Excel
+- upload cover buku
+- notifikasi pengembalian
