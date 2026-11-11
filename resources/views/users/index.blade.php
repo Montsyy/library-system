@@ -1,60 +1,47 @@
 @extends('layouts.app')
-@section('title', 'Kelola Pengguna')
 
 @section('content')
-    @if (session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
+<div class="container mx-auto p-6">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Manajemen User</h1>
+        <a href="{{ route('users.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded">Tambah User</a>
+    </div>
+
+    @if(session('success'))
+        <div class="p-3 mb-4 bg-green-100 text-green-800 rounded">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="p-3 mb-4 bg-red-100 text-red-800 rounded">{{ session('error') }}</div>
     @endif
 
-    <h2>Kelola Pengguna</h2>
-
-    <p>
-        <a href="{{ route('users.create') }}">+ Tambah Pengguna Baru</a>
-    </p>
-
-    <table border="1" cellpadding="8" cellspacing="0">
+    <table class="w-full border-collapse border bg-white">
         <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Tanggal Dibuat</th>
-                <th>Aksi</th>
+            <tr class="bg-gray-100">
+                <th class="border p-2 text-left">Nama</th>
+                <th class="border p-2 text-left">Email</th>
+                <th class="border p-2 text-left">Role</th>
+                <th class="border p-2 text-left">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($users as $user)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>
-                        @if ($user->role === 'admin')
-                            <strong>Admin</strong>
-                        @else
-                            Petugas
-                        @endif
-                    </td>
-                    <td>{{ $user->created_at->format('d M Y') }}</td>
-                    <td>
-                        <a href="{{ route('users.edit', $user->id) }}">Edit</a>
-
-                        {{-- Mencegah admin menghapus akunnya sendiri yang sedang aktif --}}
-                        @if (auth()->id() !== $user->id)
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pengguna ini?');" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Hapus</button>
-                            </form>
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="6" style="text-align: center;">Belum ada data pengguna.</td>
-                </tr>
-            @endforelse
+            @foreach($users as $user)
+            <tr>
+                <td class="border p-2">{{ $user->name }}</td>
+                <td class="border p-2">{{ $user->email }}</td>
+                <td class="border p-2 uppercase font-semibold">{{ $user->role }}</td>
+                <td class="border p-2 flex gap-2">
+                    <a href="{{ route('users.edit', $user) }}" class="text-blue-600 underline">Edit</a>
+                    @if($user->id !== auth()->id())
+                    <form action="{{ route('users.destroy', $user) }}" method="POST" onsubmit="return confirm('Hapus user ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-600 underline">Hapus</button>
+                    </form>
+                    @endif
+                </td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
+</div>
 @endsection
