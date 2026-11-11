@@ -2,38 +2,60 @@
 @section('title', 'Dashboard Statistik')
 
 @section('content')
-    <h2>Selamat Datang di Sistem Perpustakaan</h2>
-    <p>Gunakan menu navigasi di atas untuk mengakses daftar buku, kategori, member, dan transaksi peminjaman.</p>
-
-    <h3>Statistik Perpustakaan</h3>
-
-    {{-- Tampilan Card Statistik --}}
-    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
-        <div style="border: 1px solid #ccc; padding: 15px; min-width: 180px; background-color: #f9f9f9;">
-            <strong>Jumlah Judul Buku</strong>
-            <h2 style="margin: 8px 0 0 0;">{{ $totalBooks }} Judul</h2>
-        </div>
-        <div style="border: 1px solid #ccc; padding: 15px; min-width: 180px; background-color: #f9f9f9;">
-            <strong>Jumlah Stok Buku</strong>
-            <h2 style="margin: 8px 0 0 0; color: green;">{{ $totalBookStock }} Eksemplar</h2>
+    <div class="space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+            <h2 class="text-2xl font-bold text-slate-800">Selamat Datang di Sistem Perpustakaan</h2>
+            <p class="mt-2 text-slate-600">
+                Gunakan menu navigasi di atas untuk mengakses daftar buku, kategori, member, dan transaksi peminjaman.
+            </p>
         </div>
 
-        <div style="border: 1px solid #ccc; padding: 15px; min-width: 180px; background-color: #f9f9f9;">
-            <strong>Jumlah Member</strong>
-            <h2 style="margin: 8px 0 0 0;">{{ $totalMembers }} Orang</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+                <p class="text-sm text-slate-500">Jumlah Judul Buku</p>
+                <h3 class="mt-3 text-3xl font-bold text-slate-800">{{ $totalBooks }}</h3>
+                <p class="mt-2 text-sm text-slate-500">Judul</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+                <p class="text-sm text-slate-500">Jumlah Stok Buku</p>
+                <h3 class="mt-3 text-3xl font-bold text-emerald-600">{{ $totalBookStock }}</h3>
+                <p class="mt-2 text-sm text-slate-500">Eksemplar</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+                <p class="text-sm text-slate-500">Jumlah Member</p>
+                <h3 class="mt-3 text-3xl font-bold text-slate-800">{{ $totalMembers }}</h3>
+                <p class="mt-2 text-sm text-slate-500">Orang</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+                <p class="text-sm text-slate-500">Sedang Dipinjam</p>
+                <h3 class="mt-3 text-3xl font-bold text-amber-600">{{ $totalBorrowedBooks }}</h3>
+                <p class="mt-2 text-sm text-slate-500">Buku</p>
+            </div>
         </div>
 
-        <div style="border: 1px solid #ccc; padding: 15px; min-width: 180px; background-color: #f9f9f9;">
-            <strong>Sedang Dipinjam</strong>
-            <h2 style="margin: 8px 0 0 0; color: #d97706;">{{ $totalBorrowedBooks }} Buku</h2>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-4">Ringkasan Cepat</h3>
+            <ul class="space-y-3 text-slate-700">
+                <li class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <span>Jumlah Judul Buku</span>
+                    <strong>{{ $totalBooks }}</strong>
+                </li>
+                <li class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <span>Jumlah Stok Buku Tersedia</span>
+                    <strong>{{ $totalBookStock }}</strong>
+                </li>
+                <li class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <span>Jumlah Member Terdaftar</span>
+                    <strong>{{ $totalMembers }}</strong>
+                </li>
+                <li class="flex items-center justify-between">
+                    <span>Jumlah Buku yang Sedang Dipinjam</span>
+                    <strong>{{ $totalBorrowedBooks }}</strong>
+                </li>
+            </ul>
         </div>
     </div>
-
-    {{-- Ringkasan List & Aksi Cepat --}}
-    <ul>
-        <li>Jumlah Judul Buku: <strong>{{ $totalBooks }}</strong> (<a href="{{ route('books.index') }}">Lihat Buku</a>)</li>
-        <li>Jumlah Stok Buku Tersedia: <strong>{{ $totalBookStock }}</strong></li>
-        <li>Jumlah Member Terdaftar: <strong>{{ $totalMembers }}</strong> (<a href="{{ route('members.index') }}">Lihat Member</a>)</li>
-        <li>Jumlah Buku yang Sedang Dipinjam: <strong>{{ $totalBorrowedBooks }}</strong> (<a href="{{ route('borrowings.index') }}">Lihat Peminjaman</a>)</li>
-    </ul>
 @endsection

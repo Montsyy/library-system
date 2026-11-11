@@ -17,6 +17,7 @@
     <table class="w-full border-collapse border bg-white">
         <thead>
             <tr class="bg-gray-100">
+                <th class="border p-2 text-left">No</th>
                 <th class="border p-2 text-left">Nama</th>
                 <th class="border p-2 text-left">Email</th>
                 <th class="border p-2 text-left">Role</th>
@@ -24,23 +25,30 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($users as $user)
+            @forelse($users as $user)
             <tr>
+                <td class="border p-2">{{ $loop->iteration }}</td>
                 <td class="border p-2">{{ $user->name }}</td>
                 <td class="border p-2">{{ $user->email }}</td>
                 <td class="border p-2 uppercase font-semibold">{{ $user->role }}</td>
-                <td class="border p-2 flex gap-2">
-                    <a href="{{ route('users.edit', $user) }}" class="text-blue-600 underline">Edit</a>
-                    @if($user->id !== auth()->id())
-                    <form action="{{ route('users.destroy', $user) }}" method="POST" onsubmit="return confirm('Hapus user ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600 underline">Hapus</button>
-                    </form>
-                    @endif
+                <td class="border p-2">
+                    <div class="flex gap-2 items-center">
+                        <a href="{{ route('users.edit', $user) }}" class="text-blue-600 underline">Edit</a>
+                        @if($user->id !== auth()->id())
+                        <form action="{{ route('users.destroy', $user) }}" method="POST" onsubmit="return confirm('Hapus user ini?')" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 underline">Hapus</button>
+                        </form>
+                        @endif
+                    </div>
                 </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="5" class="border p-2 text-center">Belum ada data user.</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>

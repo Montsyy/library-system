@@ -16,6 +16,7 @@
     <table class="w-full border-collapse border bg-white">
         <thead>
             <tr class="bg-gray-100">
+                <th class="border p-2 text-left">No</th>
                 <th class="border p-2 text-left">Nama Kategori</th>
                 <th class="border p-2 text-left">Jumlah Buku</th>
                 @if(auth()->user()->role === 'admin')
@@ -24,22 +25,29 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($categories as $category)
+            @forelse($categories as $category)
             <tr>
+                <td class="border p-2">{{ $loop->iteration }}</td>
                 <td class="border p-2">{{ $category->name }}</td>
                 <td class="border p-2">{{ $category->books_count }}</td>
                 @if(auth()->user()->role === 'admin')
-                <td class="border p-2 flex gap-2">
-                    <a href="{{ route('categories.edit', $category) }}" class="text-blue-600 underline">Edit</a>
-                    <form action="{{ route('categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Hapus kategori ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600 underline">Hapus</button>
-                    </form>
+                <td class="border p-2">
+                    <div class="flex gap-2 items-center">
+                        <a href="{{ route('categories.edit', $category) }}" class="text-blue-600 underline">Edit</a>
+                        <form action="{{ route('categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Hapus kategori ini?')" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 underline">Hapus</button>
+                        </form>
+                    </div>
                 </td>
                 @endif
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="{{ auth()->user()->role === 'admin' ? 4 : 3 }}" class="border p-2 text-center">Belum ada data kategori.</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>

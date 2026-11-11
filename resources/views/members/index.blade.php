@@ -14,6 +14,7 @@
     <table class="w-full border-collapse border bg-white">
         <thead>
             <tr class="bg-gray-100">
+                <th class="border p-2 text-left">No</th>
                 <th class="border p-2 text-left">Kode Member</th>
                 <th class="border p-2 text-left">Nama</th>
                 <th class="border p-2 text-left">Email</th>
@@ -21,22 +22,29 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($members as $member)
+            @forelse($members as $member)
             <tr>
+                <td class="border p-2">{{ $loop->iteration }}</td>
                 <td class="border p-2">{{ $member->member_code }}</td>
                 <td class="border p-2">{{ $member->name }}</td>
                 <td class="border p-2">{{ $member->email }}</td>
-                <td class="border p-2 flex gap-2">
-                    <a href="{{ route('members.show', $member) }}" class="text-green-600 underline">Detail</a>
-                    <a href="{{ route('members.edit', $member) }}" class="text-blue-600 underline">Edit</a>
-                    <form action="{{ route('members.destroy', $member) }}" method="POST" onsubmit="return confirm('Hapus anggota ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600 underline">Hapus</button>
-                    </form>
+                <td class="border p-2">
+                    <div class="flex gap-2 items-center">
+                        <a href="{{ route('members.show', $member) }}" class="text-green-600 underline">Detail</a>
+                        <a href="{{ route('members.edit', $member) }}" class="text-blue-600 underline">Edit</a>
+                        <form action="{{ route('members.destroy', $member) }}" method="POST" onsubmit="return confirm('Hapus anggota ini?')" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 underline">Hapus</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="5" class="border p-2 text-center">Belum ada data anggota.</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
