@@ -18,6 +18,10 @@ class Book extends Model
     public function category(): BelongsTo {
         return $this-> BelongsTo(category::class);
     }
+
+    public function borrowingDetails() {
+        return $this->hasMany(BorrowingDetail::class);
+    }
 }
 
 
