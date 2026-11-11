@@ -7,9 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased">
-    <div class="min-h-screen">
+    <div class="min-h-screen flex flex-col">
         <header class="bg-slate-900 text-white shadow-lg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20 gap-4">
                     <div>
                         <a href="/dashboard" class="text-2xl font-bold tracking-tight">Library System</a>
@@ -50,9 +50,15 @@
             </div>
         </header>
 
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
             @yield('content')
         </main>
+
+        <footer class="mt-auto border-t border-slate-200 bg-slate-100">
+            <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3 text-center text-[11px] text-slate-500">
+                © {{ date('Y') }} Dhafi Putra Alfarezi
+            </div>
+        </footer>
     </div>
 </body>
 </html>
