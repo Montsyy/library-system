@@ -15,15 +15,37 @@ class Borrowing extends Model
         'status',
     ];
 
-    public function user() {
+    protected function casts(): array
+    {
+        return [
+            'borrowed_date' => 'date',
+            'due_date' => 'date',
+            'returned_date' => 'date',
+        ];
+    }
+
+    public function getStatusAttribute($value)
+    {
+        return $value ?? 'borrowed';
+    }
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function member() {
+    public function member()
+    {
         return $this->belongsTo(Member::class);
     }
 
-    public function borrowingDetails() {
+    public function details()
+    {
         return $this->hasMany(BorrowingDetail::class);
+    }
+
+    public function borrowingDetails()
+    {
+        return $this->details();
     }
 }

@@ -22,9 +22,9 @@
         <tbody>
             @forelse($member->borrowings as $borrowing)
             <tr>
-                <td class="border p-2">{{ $borrowing->borrow_date }}</td>
+                <td class="border p-2">{{ $borrowing->borrowed_date }}</td>
                 <td class="border p-2">{{ $borrowing->due_date }}</td>
-                <td class="border p-2">{{ $borrowing->return_date ?? '-' }}</td>
+                <td class="border p-2">{{ $borrowing->returned_date ?? '-' }}</td>
                 <td class="border p-2 uppercase">{{ $borrowing->status }}</td>
                 <td class="border p-2">
                     <ul class="list-disc ml-4">

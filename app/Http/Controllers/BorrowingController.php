@@ -16,6 +16,7 @@ class BorrowingController extends Controller
     public function index()
     {
         $borrowings = Borrowing::with(['user', 'member', 'details.book'])->latest()->get();
+
         return view('borrowings.index', compact('borrowings'));
     }
 
@@ -23,32 +24,39 @@ class BorrowingController extends Controller
     {
         $members = Member::orderBy('name')->get();
         $books = Book::where('stock', '>', 0)->orderBy('title')->get();
+
         return view('borrowings.create', compact('members', 'books'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'member_id'   => 'required|exists:members,id',
-            'borrow_date' => 'required|date',
-            'book_ids'    => 'required|array|min:1',
-            'book_ids.*'  => 'exists:books,id',
+            'member_id' => 'required|exists:members,id',
+            'borrowed_date' => 'required|date',
+            'book_ids' => 'required|array|min:1',
+            'book_ids.*' => 'exists:books,id',
         ]);
 
+        $selectedBooks = collect($request->book_ids)->unique()->values()->all();
+
+        if (count($selectedBooks) !== count($request->book_ids)) {
+            return back()->withInput()->with('error', 'Tidak boleh memilih buku yang sama lebih dari sekali dalam satu transaksi.');
+        }
+
         try {
-            DB::transaction(function () use ($request) {
-                $borrowDate = Carbon::parse($request->borrow_date);
-                $dueDate = $borrowDate->copy()->addWeek(); // Otomatis 1 minggu dari tanggal pinjam
+            DB::transaction(function () use ($request, $selectedBooks) {
+                $borrowDate = Carbon::parse($request->borrowed_date);
+                $dueDate = $borrowDate->copy()->addWeek();
 
                 $borrowing = Borrowing::create([
-                    'user_id'     => Auth::id(),
-                    'member_id'   => $request->member_id,
-                    'borrow_date' => $borrowDate->format('Y-m-d'),
-                    'due_date'    => $dueDate->format('Y-m-d'),
-                    'status'      => 'borrowed',
+                    'user_id' => Auth::id(),
+                    'member_id' => $request->member_id,
+                    'borrowed_date' => $borrowDate->format('Y-m-d'),
+                    'due_date' => $dueDate->format('Y-m-d'),
+                    'status' => 'borrowed',
                 ]);
 
-                foreach ($request->book_ids as $bookId) {
+                foreach ($selectedBooks as $bookId) {
                     $book = Book::lockForUpdate()->findOrFail($bookId);
 
                     if ($book->stock < 1) {
@@ -57,8 +65,8 @@ class BorrowingController extends Controller
 
                     BorrowingDetail::create([
                         'borrowing_id' => $borrowing->id,
-                        'book_id'      => $book->id,
-                        'quantity'     => 1,
+                        'book_id' => $book->id,
+                        'quantity' => 1,
                     ]);
 
                     $book->decrement('stock', 1);
@@ -75,6 +83,7 @@ class BorrowingController extends Controller
     public function show(Borrowing $borrowing)
     {
         $borrowing->load(['user', 'member', 'details.book']);
+
         return view('borrowings.show', compact('borrowing'));
     }
 
@@ -86,8 +95,8 @@ class BorrowingController extends Controller
 
         DB::transaction(function () use ($borrowing) {
             $borrowing->update([
-                'return_date' => Carbon::now()->format('Y-m-d'),
-                'status'      => 'returned',
+                'returned_date' => Carbon::now()->format('Y-m-d'),
+                'status' => 'returned',
             ]);
 
             foreach ($borrowing->details as $detail) {

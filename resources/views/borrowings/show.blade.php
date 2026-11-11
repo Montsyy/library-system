@@ -7,9 +7,9 @@
     <div class="bg-white p-4 border rounded mb-6 space-y-1">
         <p><strong>Nama Member:</strong> {{ $borrowing->member->name ?? '-' }} ({{ $borrowing->member->member_code ?? '-' }})</p>
         <p><strong>Dilayani Oleh (Admin/Petugas):</strong> {{ $borrowing->user->name ?? '-' }}</p>
-        <p><strong>Tanggal Pinjam:</strong> {{ $borrowing->borrow_date }}</p>
+        <p><strong>Tanggal Pinjam:</strong> {{ $borrowing->borrowed_date }}</p>
         <p><strong>Jatuh Tempo (Due Date):</strong> {{ $borrowing->due_date }}</p>
-        <p><strong>Tanggal Dikembalikan:</strong> {{ $borrowing->return_date ?? 'Belum dikembalikan' }}</p>
+        <p><strong>Tanggal Dikembalikan:</strong> {{ $borrowing->returned_date ?? 'Belum dikembalikan' }}</p>
         <p><strong>Status:</strong> <span class="uppercase font-bold">{{ $borrowing->status }}</span></p>
     </div>
 

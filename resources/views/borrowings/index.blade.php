@@ -31,9 +31,9 @@
             <tr>
                 <td class="border p-2">{{ $borrowing->member->name ?? '-' }}</td>
                 <td class="border p-2">{{ $borrowing->user->name ?? '-' }}</td>
-                <td class="border p-2">{{ $borrowing->borrow_date }}</td>
-                <td class="border p-2">{{ $borrowing->due_date }}</td>
-                <td class="border p-2">{{ $borrowing->return_date ?? '-' }}</td>
+                <td class="border p-2">{{ $borrowing->borrowed_date?->format('Y-m-d') ?? '-' }}</td>
+                <td class="border p-2">{{ $borrowing->due_date?->format('Y-m-d') ?? '-' }}</td>
+                <td class="border p-2">{{ $borrowing->returned_date?->format('Y-m-d') ?? '-' }}</td>
                 <td class="border p-2 font-semibold uppercase">
                     {{ $borrowing->status }}
                 </td>

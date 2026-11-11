@@ -25,9 +25,9 @@
 
         <div>
             <label class="block font-medium">Tanggal Peminjaman</label>
-            <input type="date" name="borrow_date" value="{{ old('borrow_date', date('Y-m-d')) }}" class="w-full border p-2 rounded" required>
+            <input type="date" name="borrowed_date" value="{{ old('borrowed_date', date('Y-m-d')) }}" class="w-full border p-2 rounded" required>
             <small class="text-gray-500">Jatuh tempo (Due Date) otomatis diatur 1 minggu setelah tanggal pinjam.</small>
-            @error('borrow_date') <small class="text-red-600 block">{{ $message }}</small> @enderror
+            @error('borrowed_date') <small class="text-red-600 block">{{ $message }}</small> @enderror
         </div>
 
         <div>

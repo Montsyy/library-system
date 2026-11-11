@@ -15,6 +15,7 @@
             <a href="/books">Books</a>
             <a href="/categories">Categories</a>
             <a href="/members">Members</a>
+            <a href="{{ route('borrowings.index') }}">Peminjaman</a>
         {{-- Menu khusus admin menggunakan Gate --}}
             @can('manage-users')
                 <a href="{{ route('users.index') }}">Kelola Pengguna</a>
