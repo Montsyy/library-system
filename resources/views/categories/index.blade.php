@@ -17,7 +17,6 @@
         <thead>
             <tr class="bg-gray-100">
                 <th class="border p-2 text-left">Nama Kategori</th>
-                <th class="border p-2 text-left">Deskripsi</th>
                 <th class="border p-2 text-left">Jumlah Buku</th>
                 @if(auth()->user()->role === 'admin')
                     <th class="border p-2 text-left">Aksi</th>
@@ -28,7 +27,6 @@
             @foreach($categories as $category)
             <tr>
                 <td class="border p-2">{{ $category->name }}</td>
-                <td class="border p-2">{{ $category->description ?? '-' }}</td>
                 <td class="border p-2">{{ $category->books_count }}</td>
                 @if(auth()->user()->role === 'admin')
                 <td class="border p-2 flex gap-2">
