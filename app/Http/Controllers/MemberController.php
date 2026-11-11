@@ -15,16 +15,19 @@ public function index()
 
     public function create()
     {
-        return view('members.create');
+        return view('members.create', [
+            'memberCode' => Member::generateNextMemberCode(),
+        ]);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'member_code' => 'required|string|max:50|unique:members,member_code',
-            'name'        => 'required|string|max:255',
-            'email'       => 'required|email|unique:members,email',
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|unique:members,email',
         ]);
+
+        $validated['member_code'] = Member::generateNextMemberCode();
 
         Member::create($validated);
         return redirect()->route('members.index')->with('success', 'Anggota berhasil ditambahkan.');
@@ -44,9 +47,8 @@ public function index()
     public function update(Request $request, Member $member)
     {
         $validated = $request->validate([
-            'member_code' => 'required|string|max:50|unique:members,member_code,' . $member->id,
-            'name'        => 'required|string|max:255',
-            'email'       => 'required|email|unique:members,email,' . $member->id,
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|unique:members,email,' . $member->id,
         ]);
 
         $member->update($validated);

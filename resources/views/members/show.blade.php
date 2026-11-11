@@ -1,17 +1,17 @@
 @extends('layouts.app')
-@section('title', 'Detail Anggota')
+@section('title', 'Detail Member')
 
 @section('content')
     <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between">
-            <h2 class="text-2xl font-bold text-slate-800">Detail Anggota: {{ $member->name }}</h2>
+            <h2 class="text-2xl font-bold text-slate-800">Detail Member: {{ $member->name }}</h2>
             <a href="{{ route('members.index') }}" class="text-sm text-blue-600 hover:underline">← Kembali</a>
         </div>
 
         <div class="p-6 space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
-                    <p class="text-slate-500">Kode Anggota</p>
+                    <p class="text-slate-500">Kode Member</p>
                     <p class="font-semibold text-slate-800">{{ $member->member_code }}</p>
                 </div>
                 <div>

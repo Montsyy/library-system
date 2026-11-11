@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Edit Anggota')
+@section('title', 'Edit Member')
 
 @section('content')
     <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between">
-            <h2 class="text-2xl font-bold text-slate-800">Edit Anggota</h2>
+            <h2 class="text-2xl font-bold text-slate-800">Edit Member</h2>
             <a href="{{ route('members.index') }}" class="text-sm text-blue-600 hover:underline">← Kembali</a>
         </div>
 
@@ -13,11 +13,8 @@
             @method('PUT')
 
             <div>
-                <label class="block text-sm font-medium text-slate-700 mb-2">Kode Anggota</label>
-                <input type="text" name="member_code" value="{{ old('member_code', $member->member_code) }}" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" required>
-                @error('member_code')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
+                <label class="block text-sm font-medium text-slate-700 mb-2">Kode Member</label>
+                <input type="text" name="member_code" value="{{ old('member_code', $member->member_code) }}" class="w-full border border-slate-300 rounded-lg px-3 py-2 bg-slate-50 text-slate-700 cursor-not-allowed" readonly required>
             </div>
 
             <div>

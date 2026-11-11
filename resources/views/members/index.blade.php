@@ -1,14 +1,14 @@
 @extends('layouts.app')
-@section('title', 'Daftar Anggota')
+@section('title', 'Daftar Member')
 
 @section('content')
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between gap-3">
             <div>
-                <h2 class="text-2xl font-bold text-slate-800">Daftar Anggota</h2>
+                <h2 class="text-2xl font-bold text-slate-800">Daftar Member</h2>
             </div>
             <a href="{{ route('members.create') }}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
-                + Tambah Anggota
+                + Tambah Member
             </a>
         </div>
 
