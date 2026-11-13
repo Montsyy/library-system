@@ -16,7 +16,7 @@ class Book extends Model
     ];
 
     public function category(): BelongsTo {
-        return $this-> BelongsTo(category::class);
+        return $this-> BelongsTo(Category::class);
     }
 
     public function borrowingDetails() {
