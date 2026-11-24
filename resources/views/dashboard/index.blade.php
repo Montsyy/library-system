@@ -103,38 +103,43 @@
                         <tbody class="divide-y divide-slate-200">
                             @forelse($urgentBorrowings as $row)
                                 <tr class="hover:bg-slate-50">
+                                    {{-- Kolom 1: Member --}}
                                     <td class="px-4 py-3 font-medium text-slate-800">
-                                        {{ $row->member?->name ?? 'Member Tidak Diketahui' }}
+                                        <div>{{ $row->member?->name ?? 'Member Tidak Diketahui' }}</div>
+                                        @if($row->member?->member_code)
+                                            <div class="text-[11px] text-slate-400 font-mono">{{ $row->member->member_code }}</div>
+                                        @endif
                                     </td>
-                                    <td class="px-4 py-3 text-slate-600">
+
+                                    {{-- Kolom 2: Due Date --}}
+                                    <td class="px-4 py-3 text-slate-600 font-medium">
                                         {{ $row->due_date?->format('d M Y') }}
                                     </td>
+
+                                    {{-- Kolom 3: Status (Hanya 1 tag td tunggal) --}}
                                     <td class="px-4 py-3">
-                                        <td class="px-4 py-3">
-                                    @if ($row->due_date)
-                                        @if ($row->due_date->isPast() && ! $row->due_date->isToday())
-                                            {{-- Lewat dari hari ini (Sinkron dengan Card Terlambat) --}}
-                                            <span class="inline-flex px-2 py-0.5 text-xs font-semibold rounded-full bg-red-100 text-red-700">
-                                                Terlambat
-                                            </span>
-                                        @elseif ($row->due_date->isToday())
-                                            {{-- Jatuh tempo tepat hari ini --}}
-                                            <span class="inline-flex px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-100 text-amber-700">
-                                                Jatuh Tempo Hari Ini
-                                            </span>
+                                        @if ($row->due_date)
+                                            @if ($row->due_date->isPast() && ! $row->due_date->isToday())
+                                                <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-red-100 text-red-700 border border-red-200">
+                                                    Terlambat
+                                                </span>
+                                            @elseif ($row->due_date->isToday())
+                                                <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-100 text-amber-700 border border-amber-200">
+                                                    Jatuh Tempo Hari Ini
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700 border border-blue-200">
+                                                    Segera Kembali
+                                                </span>
+                                            @endif
                                         @else
-                                            {{-- Masih ada waktu 1 sampai 2 hari ke depan --}}
-                                            <span class="inline-flex px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
-                                                Segera Kembali
-                                            </span>
+                                            <span class="text-xs text-slate-400">Tidak ada tanggal</span>
                                         @endif
-                                    @else
-                                        <span class="text-xs text-slate-400">Tidak ada tanggal</span>
-                                    @endif
-                                </td>
                                     </td>
+
+                                    {{-- Kolom 4: Aksi --}}
                                     <td class="px-4 py-3 text-right">
-                                        <a href="{{ route('borrowings.show', $row->id) }}" class="text-blue-600 hover:underline text-xs font-semibold">
+                                        <a href="{{ route('borrowings.show', $row->id) }}" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition">
                                             Rincian
                                         </a>
                                     </td>
@@ -151,52 +156,82 @@
                 </div>
             </div>
 
-            {{-- 5 Buku Paling Sering Dipinjam --}}
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                <div class="px-6 py-4 border-b border-slate-200">
+        {{-- 5 Buku Paling Sering Dipinjam --}}
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            {{-- Header Card dengan Link 'Lihat Semua' yang Selaras --}}
+            <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <div>
                     <h3 class="text-base font-bold text-slate-800">5 Buku Paling Sering Dipinjam</h3>
                     <p class="text-xs text-slate-500 mt-0.5">Buku dengan tingkat perputaran peminjaman tertinggi</p>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-slate-200 text-sm">
-                        <thead class="bg-slate-50 text-xs font-semibold text-slate-600 uppercase">
-                            <tr>
-                                <th class="px-4 py-3 text-left">Judul Buku</th>
-                                <th class="px-4 py-3 text-left">Penulis</th>
-                                <th class="px-4 py-3 text-center">Dipinjam</th>
-                                <th class="px-4 py-3 text-center">Sisa Stok</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-200">
-                            @forelse($popularBooks as $book)
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 font-semibold text-slate-800">
-                                        {{ $book->title }}
-                                    </td>
-                                    <td class="px-4 py-3 text-slate-600">
-                                        {{ $book->author }}
-                                    </td>
-                                    <td class="px-4 py-3 text-center font-bold text-blue-600">
+                <a href="{{ route('books.index') }}" class="text-xs text-blue-600 font-medium hover:underline">
+                    Lihat Semua
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                    <thead class="bg-slate-50 text-xs font-semibold text-slate-600 uppercase">
+                        <tr>
+                            <th class="px-4 py-3 text-left">Judul Buku</th>
+                            <th class="px-4 py-3 text-left">Penulis</th>
+                            <th class="px-4 py-3 text-center">Dipinjam</th>
+                            <th class="px-4 py-3 text-center">Stok</th>
+                            <th class="px-4 py-3 text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        @forelse($popularBooks as $book)
+                            <tr class="hover:bg-slate-50">
+                                {{-- Kolom 1: Judul Buku --}}
+                                <td class="px-4 py-3 font-semibold text-slate-800">
+                                    {{ $book->title }}
+                                </td>
+
+                                {{-- Kolom 2: Penulis --}}
+                                <td class="px-4 py-3 text-slate-600 font-medium">
+                                    {{ $book->author }}
+                                </td>
+
+                                {{-- Kolom 3: Frekuensi Peminjaman (Badge Biru) --}}
+                                <td class="px-4 py-3 text-center">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700 border border-blue-200">
                                         {{ $book->total_borrowed }}x
-                                    </td>
-                                    <td class="px-4 py-3 text-center text-slate-700">
-                                        {{ $book->stock }}
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="4" class="px-4 py-8 text-center text-slate-500 text-xs">
-                                        Belum ada riwayat transaksi peminjaman buku.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                                    </span>
+                                </td>
+
+                                {{-- Kolom 4: Status Stok Buku --}}
+                                <td class="px-4 py-3 text-center">
+                                    @if ($book->stock > 0)
+                                        <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700">
+                                            Sisa {{ $book->stock }}
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full bg-red-100 text-red-700">
+                                            Habis
+                                        </span>
+                                    @endif
+                                </td>
+
+                                {{-- Kolom 5: Tombol Aksi Detail (Sama dengan tombol Rincian sebelah) --}}
+                                <td class="px-4 py-3 text-right">
+                                    <a href="{{ route('books.show', $book->id) }}" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="px-4 py-8 text-center text-slate-500 text-xs">
+                                    Belum ada riwayat transaksi peminjaman buku.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
     {{-- Script Inisialisasi Chart.js --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
