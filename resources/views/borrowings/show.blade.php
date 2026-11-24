@@ -31,14 +31,10 @@
                     <p class="font-semibold text-slate-800">{{ $borrowing->returned_date ?? 'Belum dikembalikan' }}</p>
                 </div>
                 <div>
-                    <p class="text-slate-500">Status</p>
-                    @if($borrowing->status === 'borrowed')
-                        <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700 uppercase">{{ $borrowing->status }}</span>
-                    @elseif($borrowing->status === 'returned')
-                        <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700 uppercase">{{ $borrowing->status }}</span>
-                    @else
-                        <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-700 uppercase">{{ $borrowing->status }}</span>
-                    @endif
+                    <p class="text-slate-500 mb-1">Status Peminjaman</p>
+                    <span class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full border {{ $borrowing->status_badge['class'] }}">
+                        {{ $borrowing->status_badge['label'] }}
+                    </span>
                 </div>
             </div>
 
