@@ -7,9 +7,12 @@ use App\Models\Member;
 
 class MemberController extends Controller
 {
-public function index()
+    public function index(Request $request)
     {
-        $members = Member::latest()->get();
+        $members = Member::filter($request->only(['search', 'sort_by']))
+            ->paginate(10)
+            ->withQueryString();
+
         return view('members.index', compact('members'));
     }
 
