@@ -11,11 +11,18 @@ use Illuminate\Support\Facades\Gate;
 class BookController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::with('category')->latest()->get();
+        // Ambil data kategori untuk pilihan filter dropdown
+        $categories = Category::orderBy('name')->get();
 
-        return view('books.index', compact('books'));
+        // Query buku dengan scope filter, eager loading category, dan pagination 10 item per halaman
+        $books = Book::with('category')
+            ->filter($request->only(['search', 'category_id', 'stock_status', 'year', 'sort_by']))
+            ->paginate(10)
+            ->withQueryString(); // Mempertahankan parameter URL saat klik nomor halaman
+
+        return view('books.index', compact('books', 'categories'));
     }
     public function show($id)
     {
