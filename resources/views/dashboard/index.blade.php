@@ -129,7 +129,7 @@
                                                 </span>
                                             @else
                                                 <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700 border border-blue-200">
-                                                    Segera Kembali
+                                                    Segera Kembalikan
                                                 </span>
                                             @endif
                                         @else
