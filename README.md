@@ -1,172 +1,179 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
 # Library System
 
-Sistem informasi perpustakaan berbasis Laravel untuk mengelola data buku, kategori, anggota, peminjaman, serta manajemen user dengan pembagian hak akses admin dan petugas.
+Web-based library management system built with Laravel 13 and PHP 8.5. The application provides book inventory management, category classification, member registration, and borrowing and return circulation with role-based access control.
 
-## Fitur Utama
+---
 
-- Autentikasi pengguna
-- Role akses:
-  - Admin
-  - Petugas
-- Manajemen buku
-- Manajemen kategori buku
-- Manajemen anggota perpustakaan
-- Transaksi peminjaman buku
-- Pengembalian buku
-- Dashboard utama
-- Manajemen user (khusus admin)
+## Exact Tech Stack Versions
 
-## Teknologi yang Digunakan
+* **PHP**: 8.5 (Runtime: PHP 8.5.10)
+* **Framework**: Laravel 13.30 (Laravel Framework 13.30.1)
+* **Database**: MySQL (InnoDB engine, utf8mb4)
+* **Template Engine**: Blade
+* **Asset Bundler**: Vite
+* **Styling**: Tailwind CSS
+* **Charts**: Chart.js 4.4
+* **Package Managers**: Composer 2.4.1, NPM 11.1.0
 
-- PHP 8.3
-- Laravel 13
-- MySQL
-- Blade Templates
-- Vite
+---
 
-## Persyaratan
+## Verified Features
 
-Sebelum menjalankan aplikasi, pastikan perangkat Anda sudah terpasang:
+### 1. Authentication and Role-Based Access Control
+* Session-based login and logout with CSRF protection.
+* Unauthenticated access to protected routes (`/dashboard`, `/books`, `/categories`, `/members`, `/borrowings`, `/users`) automatically redirects to `/login`.
+* Role separation enforced via `RoleMiddleware`:
+  * **Admin**: Unrestricted access including user management (`/users`) and category write operations (`/categories` create, store, edit, update, destroy).
+  * **Petugas**: Operational access for books, members, and borrowings, with read-only access to categories (`/categories`). Direct access to `/users` or category write routes returns HTTP 403 Forbidden.
+* Self-deletion safeguard in `UserController::destroy` preventing administrators from deleting their own active accounts.
+* Session regeneration on login to prevent session fixation and token invalidation on logout.
 
-- PHP 8.3+
-- Composer
-- MySQL / MariaDB
-- Node.js dan npm
-- Web browser
+### 2. Dashboard Analytics
+* Summary metric cards: Total unique book titles, total physical book stock, total registered members, active borrowed books count, overdue loans count, and monthly loan counts.
+* 7-day borrowing trend line chart tracking daily circulation volume.
+* Category collection distribution chart visualizing book proportions.
+* Top 5 most frequently borrowed books table.
+* Urgent loan monitor listing overdue borrowings and loans due within 48 hours.
 
-## Langkah Instalasi
+### 3. Book Inventory Management
+* Full CRUD operations for library catalog entries.
+* Search filter supporting keyword matching on title and author fields.
+* Dropdown filters for category selection, stock status (available or out of stock), and publication year.
+* Sorting options by title, author, publication year, stock quantity, and creation date.
+* Server-side request validation ensuring title, author, year (minimum 2000), stock (minimum 0), and valid category ID.
 
-1. Clone repository
+### 4. Category Management
+* Category listings with book counts (`withCount('books')`).
+* Dedicated creation, edit, update, and deletion forms restricted to Admin accounts.
+* Read-only tabular view accessible to Petugas staff.
 
+### 5. Member Management
+* Member directory with name and unique email storage.
+* Automated sequential code assignment (`LS001`, `LS002`, `LS003`, etc.) generated via `Member::generateNextMemberCode()`.
+* Search functionality across member codes, member names, and email addresses.
+* Sorting by name, member code, email, or creation date.
+* Member detail view showing complete loan history and associated books.
+
+### 6. Borrowing and Return Circulation
+* Multi-book loan transactions in a single submission.
+* Concurrency protection using `DB::transaction` and pessimistic row locking (`Book::lockForUpdate()`) to prevent overselling on the final stock unit.
+* Duplicate book validation preventing the same book ID from being selected multiple times within a single transaction.
+* Automated 7-day loan window calculation (`borrowed_date` + 7 days).
+* Atomic stock decrement upon successful loan recording.
+* Single-action return processing with atomic stock restoration, return date timestamping, and status transition to 'returned'.
+* Validation preventing duplicate return processing on already returned transactions.
+* Dynamic status indicators: Active ('Sedang Dipinjam'), Due Today ('Jatuh Tempo Hari Ini'), Overdue ('Terlambat' with day count), and Returned ('Dikembalikan').
+
+---
+
+## User Interface Screenshots
+
+Visual documentation of verified interfaces located in `docs/screenshots/`:
+
+| Interface | Image Preview | Description |
+| :--- | :--- | :--- |
+| **Login** | ![Login Screen](docs/screenshots/login.png) | Authentication screen with email and password fields. |
+| **Dashboard** | ![Dashboard Screen](docs/screenshots/dashboard.png) | Metrics overview, collection statistics, and 7-day loan activity. |
+| **Book Catalog** | ![Books Screen](docs/screenshots/books.png) | Inventory table with multi-criteria search, filters, and stock status. |
+| **Member Management** | ![Members Screen](docs/screenshots/members.png) | Member directory with auto-generated codes and loan history links. |
+| **Borrowing Transactions** | ![Borrowings Screen](docs/screenshots/borrowings.png) | Circulation records with dynamic status badges and return action controls. |
+
+---
+
+## Demo Accounts
+
+The database seeder provisions two default accounts for system testing:
+
+| Role | Email | Password | Access Scope |
+| :--- | :--- | :--- | :--- |
+| **Administrator** | `admin@example.com` | `admin1234#` | Full system access: User Management, Category CRUD, Books, Members, Transactions, Dashboard. |
+| **Petugas** | `petugas@example.com` | `petugas1234#` | Operational access: Books, Members, Borrowings/Returns, Read-Only Categories, Dashboard. |
+
+---
+
+## Installation Steps
+
+### Prerequisites
+* PHP >= 8.5 (Extensions: `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`)
+* Composer >= 2.4
+* MySQL >= 8.0 or MariaDB >= 10.4
+* Node.js >= 20.x and NPM >= 10.x
+
+### Setup Commands
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Montsyy/library-system.git
+   cd library-system
+   ```
+
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
+
+3. **Install frontend dependencies**
+   ```bash
+   npm install
+   ```
+
+4. **Prepare environment configuration**
+   On Windows (PowerShell or Command Prompt):
+   ```bash
+   copy .env.example .env
+   ```
+   On Linux or macOS:
+   ```bash
+   cp .env.example .env
+   ```
+
+5. **Generate application encryption key**
+   ```bash
+   php artisan key:generate
+   ```
+
+6. **Configure database credentials**
+   Open `.env` and set your MySQL database connection:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=library_system
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+7. **Execute database migrations and seed default data**
+   ```bash
+   php artisan migrate --seed
+   ```
+
+8. **Build frontend assets**
+   ```bash
+   npm run build
+   ```
+
+9. **Start local development server**
+   ```bash
+   php artisan serve
+   ```
+   Open `http://127.0.0.1:8000` in your web browser.
+
+---
+
+## Quality Assurance and Code Inspection
+
+Comprehensive test execution details, architectural inspection, and vulnerability findings are documented in [TESTING_REPORT.md](TESTING_REPORT.md).
+
+To run the automated test suite:
 ```bash
-git clone https://github.com/Montsyy/library-system.git
-cd library-system
+php artisan test
 ```
 
-2. Install dependency PHP
+---
 
-```bash
-composer install
-```
+## Developer Information
 
-3. Install dependency frontend
-
-```bash
-npm install
-```
-
-4. Salin file environment
-
-```bash
-copy .env.example .env
-```
-
-atau pada Linux/macOS:
-
-```bash
-cp .env.example .env
-```
-
-5. Generate application key
-
-```bash
-php artisan key:generate
-```
-
-6. Konfigurasi database
-
-Buka file `.env` lalu sesuaikan pengaturan database Anda:
-
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=library_system
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-7. Jalankan migrasi dan seeder
-
-```bash
-php artisan migrate --seed
-```
-
-8. Build asset frontend
-
-```bash
-npm run build
-```
-
-9. Jalankan aplikasi
-
-```bash
-php artisan serve
-```
-
-Aplikasi akan tersedia di:
-
-```text
-http://127.0.0.1:8000
-```
-
-## Akun Default
-
-Seeder telah membuat akun default berikut:
-
-### Admin
-- Email: `admin@example.com`
-- Password: `admin1234#`
-
-### Petugas
-- Email: `petugas@example.com`
-- Password: `petugas1234#`
-
-## Struktur Aplikasi
-
-- `app/Http/Controllers` → logika controller
-- `app/Models` → model aplikasi
-- `resources/views` → tampilan Blade
-- `routes/web.php` → route aplikasi
-- `database/migrations` → struktur database
-- `database/seeders` → data awal aplikasi
-
-## Role Akses
-
-- Admin:
-  - dapat mengelola user
-  - dapat mengelola kategori
-  - dapat mengelola buku
-  - dapat mengelola anggota
-  - dapat melihat semua peminjaman
-
-- Petugas:
-  - dapat mengelola buku
-  - dapat mengelola anggota
-  - dapat mengelola peminjaman
-  - tidak dapat mengelola user atau kategori
-
-## Developer
-
-- Nama: DHAFI PUTRA ALFAREZI
-- NPM: 2410631250008
-- Kelas: 5A Sistem Informasi
-
-## Catatan
-
-Project ini merupakan sistem perpustakaan sederhana yang fokus pada proses pengelolaan data buku dan transaksi peminjaman. Jika Anda ingin dikembangkan lebih lanjut, fitur yang dapat ditambahkan antara lain:
-
-- riwayat peminjaman per user
-- laporan statistik
-- export PDF/Excel
-- upload cover buku
-- notifikasi pengembalian
+* **Name**: DHAFI PUTRA ALFAREZI
+* **NPM**: 2410631250008
+* **Class**: 5A Sistem Informasi
