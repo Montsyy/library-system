@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\DB;
 
 class BorrowingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $borrowings = Borrowing::with(['user', 'member', 'details.book'])->latest()->get();
+        $borrowings = Borrowing::with(['user', 'member', 'details.book'])
+            ->filter($request->only(['search', 'status', 'start_date', 'end_date', 'sort_by']))
+            ->paginate(10)
+            ->withQueryString();
 
         return view('borrowings.index', compact('borrowings'));
     }

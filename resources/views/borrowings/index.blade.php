@@ -23,6 +23,47 @@
                 {{ session('error') }}
             </div>
         @endif
+        
+        {{-- Form Pencarian & Filter Peminjaman --}}
+        <form method="GET" action="{{ route('borrowings.index') }}" class="p-6 border-b border-slate-200 bg-slate-50/50">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                <div class="lg:col-span-2">
+                    <label for="search" class="block text-xs font-semibold text-slate-600 uppercase mb-1">Cari Member / Buku</label>
+                    <input type="text" name="search" id="search" value="{{ request('search') }}"
+                        placeholder="Nama member, kode member, judul buku..."
+                        class="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="status" class="block text-xs font-semibold text-slate-600 uppercase mb-1">Status</label>
+                    <select name="status" id="status" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Semua Status</option>
+                        <option value="borrowed" @selected(request('status') === 'borrowed')>Sedang Dipinjam</option>
+                        <option value="returned" @selected(request('status') === 'returned')>Sudah Dikembalikan</option>
+                        <option value="overdue" @selected(request('status') === 'overdue')>Terlambat (Lewat Due Date)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="start_date" class="block text-xs font-semibold text-slate-600 uppercase mb-1">Dari Tanggal</label>
+                    <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}"
+                        class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="end_date" class="block text-xs font-semibold text-slate-600 uppercase mb-1">Sampai Tanggal</label>
+                    <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}"
+                        class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            <div class="mt-4 flex items-center justify-end gap-2">
+                @if (request()->hasAny(['search', 'status', 'start_date', 'end_date']))
+                    <a href="{{ route('borrowings.index') }}" class="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 border border-slate-300 bg-white rounded-lg hover:bg-slate-50 transition">
+                        Reset
+                    </a>
+                @endif
+                <button type="submit" class="bg-slate-900 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition">
+                    Terapkan Filter
+                </button>
+            </div>
+        </form>
 
         <div class="p-6">
             <div class="overflow-x-auto">
